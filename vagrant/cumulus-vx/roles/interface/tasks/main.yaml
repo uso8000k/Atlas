@@ -1,0 +1,28 @@
+---
+- name: Add source /etc/network/interfaces.d/*
+  lineinfile:
+    dest:  "/etc/network/interfaces"
+    state: present
+    line:  "source /etc/network/interfaces.d/*"
+    insertbefore: "BOF"
+  become: yes
+
+- name: Set interfaces
+  cl_interface:
+    name:  "{{ item.key }}"
+    ipv4:  "{{ item.value.ipv4 }}"
+    mtu:   9000
+  with_dict: "{{ INTERFACES }}"
+  become: yes
+  notify: Reload networking
+
+- name: Create bridge
+  cl_bridge:
+    name:       'br0'
+    ports:      'swp1'
+    vlan_aware: 'yes'
+    vids:       '2-4000'
+    pvid:       '999'
+    stp:        'no'
+  become: yes
+  notify: Reload networking

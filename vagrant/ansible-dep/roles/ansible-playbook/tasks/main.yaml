@@ -1,0 +1,16 @@
+---
+- name: Install Required Package
+  become: yes
+  apt: 
+    pkg: "{{ item }}"
+    state: installed
+  with_items: 
+    - git
+
+- name: Clone Playbooks
+  git:
+    repo: "https://github.com/{{ item }}"
+    dest: "{{ ansible_env.HOME }}/playbook/{{ item }}"
+  with_items: 
+    - "{{ PLAYBOOK_REPOS }}"
+

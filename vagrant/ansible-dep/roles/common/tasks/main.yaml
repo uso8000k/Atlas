@@ -1,0 +1,18 @@
+# common tasks
+---
+- name: Update List
+  apt:
+    update_cache: yes
+
+- name: Update all packages
+  apt:
+    upgrade: yes
+
+- name: Install Common Package
+  apt:
+    pkg: "{{ item }}"
+    state: installed
+  with_items: 
+    - git-core
+    - curl
+    - wget

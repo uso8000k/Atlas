@@ -1,0 +1,11 @@
+---
+- name: Install extent modules
+  become: yes
+  shell: "ansible-galaxy install {{ item }}"
+  with_items:
+    - "{{ EXT_MODULES }}"
+
+- name: Generate ansible.cfg
+  template:
+    src:  "ansible.j2"
+    dest: "{{ ansible_env.HOME }}/ansible.cfg"

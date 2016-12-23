@@ -1,0 +1,12 @@
+# install ansible environment
+---
+- hosts: all
+  sudo:  true
+  user:  vagrant
+  vars:
+    - ansible_python_interpreter: "/usr/bin/env python"
+  roles:
+    - common
+    - ansible
+    - ansible-ext
+    - ansible-playbook

@@ -1,0 +1,36 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+    config.vm.define :"ansible"  do |node|
+        node.vm.box  = "ubuntu/trusty64"
+        #node.vm.box  = "ubuntu/xenial64"
+        node.vm.network :private_network, ip: "192.168.1.10/24"
+        node.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--memory", 512]
+            vb.customize ["modifyvm", :id, "--cpus", 1]
+        end
+        node.vm.provision :ansible do |ansible|
+            ansible.host_key_checking = false
+            ansible.playbook = "site.yaml"
+            ansible.raw_arguments = [
+                "--user=vagrant"
+            ]
+        end
+    end
+
+    num_nodes = (ENV['NUM_NODES'] || 1).to_i
+    num_nodes.times do |n|
+        config.vm.define :"node#{n+1}" do |node|
+            node.vm.box  = "ubuntu/trusty64"
+            node.vm.network :private_network, ip: "192.168.1.#{n+101}/24"
+            node.vm.network :private_network, ip: "192.168.1.#{n+102}/24"
+            node.vm.network :private_network, ip: "192.168.1.#{n+103}/24"
+            node.vm.provider :virtualbox do |vb|
+                vb.customize ["modifyvm", :id, "--memory", 512]
+                vb.customize ["modifyvm", :id, "--cpus",   1]
+            end
+        end
+    end
+end

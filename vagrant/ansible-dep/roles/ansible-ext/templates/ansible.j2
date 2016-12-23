@@ -1,0 +1,4 @@
+[defaults]
+library={% for item in EXT_MODULES %}/etc/ansible/roles/{{ item }}/library:{% endfor %}/usr/share/ansible
+host_key_checking=False 
+hostfile = ansible.hosts

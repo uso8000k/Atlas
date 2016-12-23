@@ -1,0 +1,11 @@
+# Overwrite 99-syslog.conf
+---
+- name: Overwrite 99-syslogs.conf
+  template:
+    src:     99-syslog.conf
+    dest:    /etc/rsyslog.d/99-syslog.conf
+    owner:   root
+    mode:    0644
+    backup:  yes
+  become: yes
+  notify: Restart rsyslog

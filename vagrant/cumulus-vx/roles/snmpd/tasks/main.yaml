@@ -1,0 +1,12 @@
+# Overwrite snmpd.conf
+---
+- name: Overwrite snmpd.conf
+  template:
+    src:    "snmpd.conf"
+    dest:   "/etc/snmp/snmpd.conf"
+    owner:  root
+    mode:   0600
+    backup: yes
+  become: yes
+  notify: Restart snmpd
+

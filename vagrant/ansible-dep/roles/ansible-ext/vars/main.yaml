@@ -1,0 +1,6 @@
+---
+EXT_MODULES:
+  #- cumulus.CumulusLinux
+  - Juniper.junos
+  #- arista.eos
+  #- ios-xr.iosxr-ansible

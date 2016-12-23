@@ -1,0 +1,6 @@
+# common tasks
+
+- name: Update List
+  become: yes
+  apt:  update_cache=yes
+

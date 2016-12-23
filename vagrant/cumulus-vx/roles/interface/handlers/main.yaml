@@ -1,0 +1,5 @@
+- name: Reload networking
+  service:
+    name:  networking 
+    state: reloaded
+  become: yes
